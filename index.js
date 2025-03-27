@@ -28,9 +28,26 @@ app.post('/save/data',async(req , res)=>{
 })
 app.get('/find/data',async(req , res)=>{
     try{
-        let stuData = await Student.find();
-        res.status(200).send({data: stuData, msg: "Data"});
+        console.log(req.query.namee)
+        let stuData = await Student.find({name:req.query.namee});
+        res.status(200).send({data:stuData})
+        // let stuData = await Student.find();
+        // let totalmarks = 0;
+        // stuData.map((d)=>{
+        //     totalmarks += d.marks;
+        // })
+        // res.status(200).send({data: stuData, msg: "Data"});
+        // res.status(200).send({data:totalmarks});
 
+    }catch(err){
+        console.log(err);
+        res.status(500).send({data: err,msg: "Error"});
+    }
+})
+app.put('/update/data',async(req , res)=>{
+    try{
+       let stuData = await Student.findOneAndUpdate({name : req.body.name},{$set:{marks:req.body.marks}})
+       res.status(200).send({data:stuData});
     }catch(err){
         console.log(err);
         res.status(500).send({data: err,msg: "Error"});
