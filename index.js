@@ -26,6 +26,16 @@ app.post('/save/data',async(req , res)=>{
         res.status(500).send({data: err});
     }
 })
+app.get('/find/data',async(req , res)=>{
+    try{
+        let stuData = await Student.find();
+        res.status(200).send({data: stuData, msg: "Data"});
+
+    }catch(err){
+        console.log(err);
+        res.status(500).send({data: err,msg: "Error"});
+    }
+})
 app.listen(6000, ()=>{
     console.log("server started again");
 })
